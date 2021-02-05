@@ -105,6 +105,8 @@ export default {
       try {
         const res = await login(this.user)
         this.$toast.success('登录成功')
+        // 存储用户token
+        this.$store.commit('setUser', res.data.data)
       } catch (err) {
         this.$toast.fail('用户名或者密码错误')
       }
