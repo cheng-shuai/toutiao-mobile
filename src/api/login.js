@@ -14,3 +14,13 @@ export const login = data => {
     data
   })
 }
+
+/**
+ * 获取短信验证码
+ */
+export const getSms = mobile => {
+  return request({
+    method: 'GET',
+    url: `/app/v1_0/sms/codes/${mobile}`
+  })
+}
