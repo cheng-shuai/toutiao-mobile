@@ -6,6 +6,8 @@ import Vant from 'vant'
 import 'vant/lib/index.css'
 // 引入全局样式
 import '@/styles/index.less'
+// 自动设置rem基准值
+import 'amfe-flexible'
 
 Vue.config.productionTip = false
 Vue.use(Vant)
