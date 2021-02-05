@@ -12,9 +12,10 @@ const routes = [
   {
     path: '/',
     component: () => import('@/views/layout'),
+    redirect: '/home',
     children: [
       {
-        path: '', // 留空默认进入
+        path: '/home', // 留空默认进入
         name: 'home',
         component: () => import('@/views/home')
       },
