@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import { login, getSms } from '@/api/login'
+import { login, getSms } from '@/api/user'
 
 export default {
   name: 'LoginIndex',
@@ -107,6 +107,8 @@ export default {
         this.$toast.success('登录成功')
         // 存储用户token
         this.$store.commit('setUser', res.data.data)
+        // 跳转到我的页面
+        this.$router.back()
       } catch (err) {
         this.$toast.fail('用户名或者密码错误')
       }
