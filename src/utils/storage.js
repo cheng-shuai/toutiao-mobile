@@ -14,11 +14,11 @@ export const getItem = name => {
 export const setItem = (name, value) => {
   if (typeof value === 'object') {
     value = JSON.stringify(value)
-    return window.localStorage.setItem('name', value)
+    return window.localStorage.setItem(name, value)
   }
-  window.localStorage.setItem('name', value)
+  window.localStorage.setItem(name, value)
 }
 
 export const removeItem = name => {
-  window.localStorage.removeItem('name')
+  window.localStorage.removeItem(name)
 }
