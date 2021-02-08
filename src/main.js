@@ -9,6 +9,9 @@ import '@/styles/index.less'
 // 自动设置rem基准值
 import 'amfe-flexible'
 
+// 时间
+import './utils/dayjs'
+
 Vue.config.productionTip = false
 Vue.use(Vant)
 

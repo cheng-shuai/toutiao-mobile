@@ -24,7 +24,7 @@
         <div class="description">
           <span>{{article.aut_name}}</span>
           <span>{{article.comm_count}}评论</span>
-          <span>{{article.pubdate}}</span>
+          <span>{{article.pubdate | relativeTime}}</span>
         </div>
       </div>
       <div class="article-img-r"
@@ -78,6 +78,9 @@ export default {
     width: 116px;
     height: 73px;
     margin-left: 12px;
+  }
+  .description span {
+    margin-right: 12px;
   }
 }
 </style>>
