@@ -22,6 +22,14 @@
       >
         <article-list :channel="channel"/>
       </van-tab>
+      <!-- 面包屑 -->
+      <div
+        slot="nav-right"
+        @click="isShowEdit = true"
+        class="wap-nav-wrap"
+      >
+        <van-icon name="wap-nav" />
+      </div>
     </van-tabs>
     <!-- 弹出层 -->
     <van-popup
@@ -80,11 +88,9 @@ export default {
       font-size: 14px;
     }
   }
-
   ::v-deep .van-nav-bar__title {
     max-width: none;
   }
-
   ::v-deep .van-tab {
     border-right: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
@@ -94,6 +100,19 @@ export default {
     width: 15px;
     height: 3px;
     margin-bottom: 5px;
+  }
+  .wap-nav-wrap {
+    position: fixed;
+    right: 0;
+    width: 33px;
+    height: 44px;
+    background: #fff;
+    opacity: .9;
+    .van-icon-wap-nav {
+      display: flex;
+      justify-content: center;
+      line-height: 44px;
+    }
   }
 }
 
