@@ -24,6 +24,10 @@
       </van-tab>
       <!-- 面包屑 -->
       <div
+       class="wpa-nav-wrap-placeholder"
+       slot="nav-right"
+       ></div>
+      <div
         slot="nav-right"
         @click="isShowEdit = true"
         class="wap-nav-wrap"
@@ -40,13 +44,16 @@
       get-container="body"
       round
       :style="{ height: '100%' }"
-    />
+    >
+      <channel-edit/>
+    </van-popup>
   </div>
 </template>
 
 <script>
 import { getUserChannels } from '@/api/user'
 import ArticleList from '@/views/home/components/ArticleList'
+import ChannelEdit from '@/views/home/components/ChannelEdit'
 
 export default {
   name: 'HomeIndex',
@@ -54,11 +61,12 @@ export default {
     return {
       active: 0,
       userChannels: [],
-      isShowEdit: false
+      isShowEdit: true
     }
   },
   components: {
-    ArticleList
+    ArticleList,
+    ChannelEdit
   },
   created () {
     this.loadUserChannels()
@@ -102,17 +110,23 @@ export default {
     margin-bottom: 5px;
   }
   .wap-nav-wrap {
+    box-sizing: border-box;
     position: fixed;
     right: 0;
     width: 33px;
-    height: 44px;
+    height: 43px;
     background: #fff;
     opacity: .9;
+    border-bottom: 1px solid #ddd;
     .van-icon-wap-nav {
       display: flex;
       justify-content: center;
       line-height: 44px;
     }
+  }
+  .wpa-nav-wrap-placeholder {
+    width: 33px;
+    flex-shrink: 0;
   }
 }
 
