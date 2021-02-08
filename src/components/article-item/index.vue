@@ -1,17 +1,21 @@
 <template>
   <div class="article-item-container">
     <van-cell>
-      <div class="article-title" slot="title">
+      <div class="article-title van-multi-ellipsis--l3" slot="title">
         {{article.title}}
       </div>
       <div class="article-describe" slot="label">
-        <div class="article-img-c" v-if="article.cover.type === 3">
+        <div
+          class="article-img-c"
+          v-if="article.cover.type === 3"
+        >
           <div>
             <van-image
             v-for="(img, index) in article.cover.images"
             :key="index"
             width="116"
             height="73"
+            fit="cover"
             :src="img"
           />
           </div>
@@ -27,8 +31,6 @@
       >
         <div class="div" slot="default">
           <van-image
-            width="116"
-            height="73"
             fit="cover"
             :src="article.cover.images[0]"
           />
@@ -50,6 +52,17 @@ export default {
 }
 </script>
 
-<style>
-
-</style>
+<style lang="less" scoped>
+.article-item-container {
+  .article-title {
+    font-size: 16px;
+    color: #3a3a3a;
+  }
+  .van-cell__value {
+    flex: unset;
+    width: 116px;
+    height: 73px;
+    margin-left: 12px;
+  }
+}
+</style>>
