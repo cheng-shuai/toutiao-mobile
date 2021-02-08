@@ -23,6 +23,16 @@
         <article-list :channel="channel"/>
       </van-tab>
     </van-tabs>
+    <!-- 弹出层 -->
+    <van-popup
+      v-model="isShowEdit"
+      closeable
+      close-icon="close"
+      position="bottom"
+      get-container="body"
+      round
+      :style="{ height: '100%' }"
+    />
   </div>
 </template>
 
@@ -35,7 +45,8 @@ export default {
   data () {
     return {
       active: 0,
-      userChannels: []
+      userChannels: [],
+      isShowEdit: false
     }
   },
   components: {
