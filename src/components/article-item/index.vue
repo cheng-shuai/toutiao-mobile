@@ -6,15 +6,16 @@
       </div>
       <div class="article-describe" slot="label">
         <div
-          class="article-img-c"
+          class="article-img-wrap"
           v-if="article.cover.type === 3"
         >
-          <div>
-            <van-image
+          <div
             v-for="(img, index) in article.cover.images"
             :key="index"
-            width="116"
-            height="73"
+            class="article-img"
+          >
+            <van-image
+            class="article-img-c"
             fit="cover"
             :src="img"
           />
@@ -54,6 +55,20 @@ export default {
 
 <style lang="less" scoped>
 .article-item-container {
+  .article-img-wrap {
+    display: flex;
+    .article-img {
+      flex: 1;
+      padding: 15px 0;
+      &:not(:last-child) {
+        margin-right: 4px;
+      }
+      .article-img-c {
+        width: 100%;
+        height: 73px;
+      }
+    }
+  }
   .article-title {
     font-size: 16px;
     color: #3a3a3a;
