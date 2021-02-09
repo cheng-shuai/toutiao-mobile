@@ -45,7 +45,7 @@ export default {
       articles: [],
       loading: false,
       finished: false,
-      timestamp: null,
+      timestamp: 1556789000001,
       isRefreshLoading: false // 刷新状态
     }
   },
@@ -54,7 +54,8 @@ export default {
       // 异步更新数据
       const { data } = await getArticles({
         channel_id: this.channel.id,
-        timestamp: this.timestamp || Date.now(),
+        // timestamp: this.timestamp || Date.now(), // 接口有问题，更换接口
+        timestamp: this.timestamp,
         with_top: 1
       })
       // setTimeout 仅做示例，真实场景中一般为 ajax 请求
@@ -73,9 +74,11 @@ export default {
     async onRefresh () {
       const { data } = await getArticles({
         channel_id: this.channel.id,
-        timestamp: Date.now(),
+        // timestamp: Date.now(),
+        timestamp: this.timestamp,
         with_top: 1
       })
+      this.timestamp = data.data.pre_timestamp
       const { results } = data.data
       this.articles.unshift(...results)
       this.isRefreshLoading = false

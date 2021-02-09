@@ -49,6 +49,7 @@
        :user-channels="userChannels"
        @close="isShowEdit = false"
        @update-active="active = $event"
+       :active="active"
       />
     </van-popup>
   </div>
@@ -58,6 +59,8 @@
 import { getUserChannels } from '@/api/user'
 import ArticleList from '@/views/home/components/ArticleList'
 import ChannelEdit from '@/views/home/components/ChannelEdit'
+import { getItem } from '@/utils/storage'
+import { mapState } from 'vuex'
 
 export default {
   name: 'HomeIndex',
@@ -65,20 +68,40 @@ export default {
     return {
       active: 0,
       userChannels: [],
-      isShowEdit: true
+      isShowEdit: false
     }
   },
   components: {
     ArticleList,
     ChannelEdit
   },
+  computed: {
+    ...mapState(['user-channels'])
+  },
   created () {
     this.loadUserChannels()
   },
   methods: {
     async loadUserChannels () {
-      const { data } = await getUserChannels()
-      this.userChannels = data.data.channels
+      let channels = []
+      if (this.user) {
+        // 已经登录，请求获取线上的用户频道列表数据
+        const { data } = await getUserChannels()
+        channels = data.data.channels
+      } else {
+        // 没有登录，判断是否有本地存储的频道列表数据
+        const localChannels = getItem('user-channels')
+
+        // 如果有本地存储的频道列表则使用
+        if (localChannels) {
+          channels = localChannels
+        } else {
+          // 用户没有登录，也没有本地存储的频道，垃圾请求后偶去默认的推荐频道猎豹
+          const { data } = await getUserChannels()
+          this.userChannels = data.data.channels
+        }
+      }
+      this.userChannels = channels
     }
   }
 }

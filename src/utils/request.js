@@ -6,8 +6,8 @@ import axios from 'axios'
 import store from '@/store/index'
 
 const request = axios.create({
-  // baseURL: 'http://api-toutiao-web.itheima.net'
-  baseURL: 'http://ttapi.research.itcast.cn/'
+  baseURL: 'http://api-toutiao-web.itheima.net'
+  // baseURL: 'http://ttapi.research.itcast.cn/'
 })
 
 // 请求拦截器

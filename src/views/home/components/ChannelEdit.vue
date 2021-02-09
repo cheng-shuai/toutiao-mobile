@@ -12,11 +12,12 @@
     </van-cell>
       <van-grid :gutter="10">
         <van-grid-item
+        :class="{active : index === active}"
         v-for="(channel, index) in userChannels"
         :key="index"
         :icon="(isEdit && index !== 0) ? 'close' : ''"
         :text="channel.name"
-        @click="editUserChannel(index)"
+        @click="editUserChannel(channel, index)"
         />
       </van-grid>
         <van-cell class="my-channel" center :border="false">
@@ -34,13 +35,19 @@
 </template>
 
 <script>
-import { getAllChannels } from '@/api/channel'
+import { mapState } from 'vuex'
+import { setItem } from '@/utils/storage'
+import { getAllChannels, addUserChannel, deleteUserChannel } from '@/api/channel'
 
 export default {
   name: 'ChannelEdit',
   props: {
     userChannels: {
       type: Array,
+      required: true
+    },
+    active: {
+      type: Number,
       required: true
     }
   },
@@ -58,20 +65,44 @@ export default {
       const { data } = await getAllChannels()
       this.allChannels = data.data.channels
     },
-    onAdd (channel) {
+    async onAdd (channel) {
       this.userChannels.push(channel)
+      // 数据持久化
+      if (this.user) {
+        // 登录了，将用户结果存储到线上
+        await addUserChannel({
+          channels: [
+            { id: channel.id, seq: this.userChannels.length }
+          ]
+        })
+      } else {
+        // 没有登录就存储到本地
+        setItem('user-channels', this.userChannels)
+      }
     },
-    editUserChannel (index) {
+    editUserChannel (channel, index) {
       if (this.isEdit && index !== 0) {
         // 删除频道
-        this.deleteChannel(index)
+        this.deleteChannel(channel, index)
       } else {
         // 跳转到频道
         this.gotoChannel(index)
       }
     },
-    deleteChannel (index) {
+    async deleteChannel (channel, index) {
+      // 如果是当前激活频道之前的频道
+      if (index <= this.active) {
+        // 更新频道的索引
+        this.$emit('update-active', this.active - 1)
+      }
       this.userChannels.splice(index, 1)
+      if (this.user) {
+        // 如果用户登录，将持久化到线上
+        await deleteUserChannel(channel.id)
+      } else {
+        // 如果用户没有登录，持久化到本地
+        setItem('user-channels', this.userChannels)
+      }
     },
     gotoChannel (index) {
       // 关闭弹出层
@@ -81,6 +112,7 @@ export default {
     }
   },
   computed: {
+    ...mapState(['user']),
     recommendChannels () {
       return this.allChannels.filter(channel => {
         return !this.userChannels.find(allChannels => {
@@ -114,6 +146,11 @@ export default {
     position: absolute;
     top: -8px;
     right: -8px;
+  }
+  .active {
+    ::v-deep .van-grid-item__text {
+      color: red;
+    }
   }
 }
 </style>>
