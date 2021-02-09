@@ -24,9 +24,9 @@
       </van-tab>
       <!-- 面包屑 -->
       <div
-       class="wpa-nav-wrap-placeholder"
-       slot="nav-right"
-       ></div>
+        class="wpa-nav-wrap-placeholder"
+        slot="nav-right"
+      ></div>
       <div
         slot="nav-right"
         @click="isShowEdit = true"
@@ -46,10 +46,10 @@
       :style="{ height: '100%' }"
     >
       <channel-edit
-       :user-channels="userChannels"
-       @close="isShowEdit = false"
-       @update-active="active = $event"
-       :active="active"
+        :user-channels="userChannels"
+        @close="isShowEdit = false"
+        @update-active="active = $event"
+        :active="active"
       />
     </van-popup>
   </div>
