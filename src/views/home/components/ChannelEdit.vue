@@ -11,9 +11,9 @@
     </van-cell>
       <van-grid :gutter="10">
         <van-grid-item
-        v-for="value in 8"
-        :key="value"
-        text="文字"
+        v-for="(channel, index) in userChannels"
+        :key="index"
+        :text="channel.name"
         />
       </van-grid>
         <van-cell class="my-channel" center :border="false">
@@ -21,17 +21,48 @@
     </van-cell>
       <van-grid :gutter="10">
         <van-grid-item
-        v-for="value in 8"
-        :key="value"
-        text="文字"
+        v-for="(channel, index) in recommendChannels"
+        :key="index"
+        :text="channel.name"
         />
       </van-grid>
   </div>
 </template>
 
 <script>
+import { getAllChannels } from '@/api/channel'
+
 export default {
-  name: 'ChannelEdit'
+  name: 'ChannelEdit',
+  props: {
+    userChannels: {
+      type: Array,
+      required: true
+    }
+  },
+  data () {
+    return {
+      allChannels: []
+    }
+  },
+  created () {
+    this.loadGetAllChannels()
+  },
+  methods: {
+    async loadGetAllChannels () {
+      const { data } = await getAllChannels()
+      this.allChannels = data.data.channels
+    }
+  },
+  computed: {
+    recommendChannels () {
+      return this.allChannels.filter(channel => {
+        return !this.userChannels.find(allChannels => {
+          return allChannels.id === channel.id
+        })
+      })
+    }
+  }
 }
 </script>
 
