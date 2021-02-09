@@ -16,7 +16,7 @@
         text="文字"
         />
       </van-grid>
-          <van-cell class="my-channel" center :border="false">
+        <van-cell class="my-channel" center :border="false">
       <div slot="title">频道推荐</div>
     </van-cell>
       <van-grid :gutter="10">
@@ -38,5 +38,17 @@ export default {
 <style lang="less" scoped>
 .channel-edit-container {
   padding-top: 54px;
+  .van-cell__title {
+    font-size: 16px;
+  }
+  ::v-deep .van-grid-item__content {
+    background-color: #f4f5f6;
+    width: 80px;
+    height: 43px;
+    .van-grid-item__text {
+      font-size: 14px;
+      color: #222;
+    }
+  }
 }
 </style>>
