@@ -67,7 +67,7 @@ export default {
   data () {
     return {
       user: {
-        mobile: '13911111111',
+        mobile: '17090086870',
         code: '246810'
       },
       formRules: {
