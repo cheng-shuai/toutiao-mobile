@@ -74,7 +74,10 @@ export default {
       this.userChannels.splice(index, 1)
     },
     gotoChannel (index) {
-      console.log('跳转频道')
+      // 关闭弹出层
+      this.$emit('close')
+      // 跳转到相应的频道
+      this.$emit('update-active', index)
     }
   },
   computed: {

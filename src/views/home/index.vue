@@ -45,7 +45,11 @@
       round
       :style="{ height: '100%' }"
     >
-      <channel-edit :user-channels="userChannels"/>
+      <channel-edit
+       :user-channels="userChannels"
+       @close="isShowEdit = false"
+       @update-active="active = $event"
+      />
     </van-popup>
   </div>
 </template>
