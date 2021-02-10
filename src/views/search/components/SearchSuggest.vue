@@ -4,9 +4,10 @@
   <van-cell
     v-for="(suggestion, index) in suggestons"
     :key="index"
-    :title="suggestion"
     icon="search"
-  ></van-cell>
+  >
+    <div slot="title" v-html="highlight(suggestion)"></div>
+  </van-cell>
 </van-cell-group>
 </div>
 </template>
@@ -35,11 +36,17 @@ export default {
       handler: debounce(async function () {
         const { data } = await getSearchSuggestions(this.searchText)
         this.suggestons = data.data.options
-      }, 1000),
+      }, 500),
       immediate: true
     }
   },
-  methods: {},
+  methods: {
+    highlight (suggestion) {
+      return suggestion.replace(
+        new RegExp(this.searchText, 'gi'), `<span style="color: red;">${this.searchText}</span>`
+      )
+    }
+  },
   created () {},
   mounted () {}
 }
