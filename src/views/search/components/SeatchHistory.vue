@@ -20,6 +20,7 @@
 
 <script>
 import { deleteSearchHistories } from '@/api/search'
+import { setItem } from '@/utils/storage'
 
 export default {
   name: 'SearchHistory',
@@ -42,6 +43,8 @@ export default {
       if (this.isDeleteShow) {
         // 如果是删除状态，则删除
         this.searchHistories.splice(index, 1)
+        // 设置本地的历史记录
+        setItem('user-search', this.searchHistories)
       } else {
         // 如果不是删除状态，则跳转到相应的搜索结果
         this.$emit('search', history)
@@ -52,6 +55,7 @@ export default {
       const res = await deleteSearchHistories()
       // 删除本地的历史记录
       this.searchHistories.splice(0, this.searchHistories.length)
+      setItem('user-search', this.searchHistories)
     }
   },
   created () {},
