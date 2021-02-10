@@ -7,16 +7,17 @@
       placeholder="请输入搜索关键词"
       input-align="center"
       show-action
+      @focus="isShowResult = false"
       @search="onSearch"
       @cancel="$router.back()"
     />
   </form>
-  <!-- 联想建议 -->
-  <search-suggest/>
-  <!-- 搜索历史 -->
-  <seatch-history/>
   <!-- 搜索结果 -->
-  <search-result/>
+  <search-result v-if="isShowResult"/>
+  <!-- 联想建议 -->
+  <search-suggest v-else-if="searchText"/>
+  <!-- 搜索历史 -->
+  <seatch-history v-else/>
 </div>
 </template>
 
@@ -34,14 +35,15 @@ export default {
   },
   data () {
     return {
-      searchText: ''
+      searchText: '',
+      isShowResult: false
     }
   },
   computed: {},
   watch: {},
   methods: {
     onSearch () {
-      console.log('search')
+      this.isShowResult = true
     }
   },
   created () {},
