@@ -15,10 +15,13 @@
   <search-suggest/>
   <!-- 搜索历史 -->
   <seatch-history/>
+  <!-- 搜索结果 -->
+  <search-result/>
 </div>
 </template>
 
 <script>
+import SearchResult from './components/SearchResult.vue'
 import SearchSuggest from './components/SearchSuggest'
 import SeatchHistory from './components/SeatchHistory.vue'
 
@@ -26,7 +29,8 @@ export default {
   name: 'SearchIndex',
   components: {
     SearchSuggest,
-    SeatchHistory
+    SeatchHistory,
+    SearchResult
   },
   data () {
     return {
