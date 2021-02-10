@@ -30,6 +30,9 @@
 import SearchResult from './components/SearchResult.vue'
 import SearchSuggest from './components/SearchSuggest'
 import SeatchHistory from './components/SeatchHistory.vue'
+import { setItem, getItem } from '@/utils/storage'
+import { mapState } from 'vuex'
+import { getSearchHistories } from '@/api/search'
 
 export default {
   name: 'SearchIndex',
@@ -45,7 +48,9 @@ export default {
       searchHistories: []
     }
   },
-  computed: {},
+  computed: {
+    ...mapState(['user'])
+  },
   watch: {},
   methods: {
     onSearch (searchText) {
@@ -58,11 +63,26 @@ export default {
       // 把最新的搜索历史记录放到顶部
       this.searchHistories.unshift(searchText)
 
+      // 存储用户历史记录到本地
+      setItem('user-search', this.searchHistories)
+
       // 展示搜索结果
       this.isShowResult = true
+    },
+    async loadSearchHistories () {
+      if (this.user) {
+        // 如果有用户登录，则获取服务器的历史记录
+        const { data } = await getSearchHistories()
+        this.searchHistories = data.data.keywords
+      } else {
+        // 没有则获取本地的历史记录
+        this.searchHistories = getItem('user-search') || []
+      }
     }
   },
-  created () {},
+  created () {
+    this.loadSearchHistories()
+  },
   mounted () {}
 }
 </script>
