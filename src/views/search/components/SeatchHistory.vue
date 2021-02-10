@@ -1,23 +1,25 @@
 <template>
 <div class='search-history-container'>
   <van-cell title="历史记录">
-    <div>
-      <span>全部删除 </span>
-      <span>完成</span>
+    <div v-if="isDeleteShow">
+      <span @click="onDeleteAll">全部删除 </span>
+      <span @click="isDeleteShow = false">完成</span>
     </div>
-    <van-icon name="delete-o" />
+    <van-icon v-else name="delete-o" @click="isDeleteShow = true"/>
   </van-cell>
   <van-cell
     v-for="(history, index) in searchHistories"
     :title="history"
     :key="index"
+    @click="onDelete(history, index)"
   >
-    <van-icon name="close"/>
+    <van-icon name="close" v-show="isDeleteShow"/>
   </van-cell>
 </div>
 </template>
 
 <script>
+import { deleteSearchHistories } from '@/api/search'
 
 export default {
   name: 'SearchHistory',
@@ -29,11 +31,29 @@ export default {
     }
   },
   data () {
-    return {}
+    return {
+      isDeleteShow: false
+    }
   },
   computed: {},
   watch: {},
-  methods: {},
+  methods: {
+    onDelete (history, index) {
+      if (this.isDeleteShow) {
+        // 如果是删除状态，则删除
+        this.searchHistories.splice(index, 1)
+      } else {
+        // 如果不是删除状态，则跳转到相应的搜索结果
+        this.$emit('search', history)
+      }
+    },
+    async onDeleteAll () {
+      // 删除线上的历史记录
+      const res = await deleteSearchHistories()
+      // 删除本地的历史记录
+      this.searchHistories.splice(0, this.searchHistories.length)
+    }
+  },
   created () {},
   mounted () {}
 }

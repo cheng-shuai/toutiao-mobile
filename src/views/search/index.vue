@@ -22,7 +22,11 @@
     @search="onSearch"
   />
   <!-- 搜索历史 -->
-  <seatch-history v-else :search-histories="searchHistories"/>
+  <seatch-history
+    v-else
+    :search-histories="searchHistories"
+    @search="onSearch"
+  />
 </div>
 </template>
 
