@@ -22,7 +22,7 @@
     @search="onSearch"
   />
   <!-- 搜索历史 -->
-  <seatch-history v-else/>
+  <seatch-history v-else :search-histories="searchHistories"/>
 </div>
 </template>
 
@@ -41,14 +41,24 @@ export default {
   data () {
     return {
       searchText: '',
-      isShowResult: false
+      isShowResult: false,
+      searchHistories: []
     }
   },
   computed: {},
   watch: {},
   methods: {
-    onSearch (serchText) {
-      this.searchText = serchText
+    onSearch (searchText) {
+      this.searchText = searchText
+      const index = this.searchHistories.indexOf(searchText)
+      if (index !== -1) {
+        // 把重复项删除
+        this.searchHistories.splice(index, 1)
+      }
+      // 把最新的搜索历史记录放到顶部
+      this.searchHistories.unshift(searchText)
+
+      // 展示搜索结果
       this.isShowResult = true
     }
   },

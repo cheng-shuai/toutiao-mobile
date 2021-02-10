@@ -7,10 +7,11 @@
     </div>
     <van-icon name="delete-o" />
   </van-cell>
-  <van-cell title="hello">
-    <van-icon name="close"/>
-  </van-cell>
-  <van-cell title="world">
+  <van-cell
+    v-for="(history, index) in searchHistories"
+    :title="history"
+    :key="index"
+  >
     <van-icon name="close"/>
   </van-cell>
 </div>
@@ -21,6 +22,12 @@
 export default {
   name: 'SearchHistory',
   components: {},
+  props: {
+    searchHistories: {
+      type: Array,
+      required: true
+    }
+  },
   data () {
     return {}
   },
