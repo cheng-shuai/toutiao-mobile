@@ -77,7 +77,7 @@ export default {
     ChannelEdit
   },
   computed: {
-    ...mapState(['user-channels'])
+    ...mapState(['user'])
   },
   created () {
     this.loadUserChannels()
@@ -127,10 +127,10 @@ export default {
   ::v-deep .van-nav-bar__title {
     max-width: none;
   }
-  ::v-deep .van-tab {
-    border-right: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
-  }
+  // ::v-deep .van-tab {
+  //   // border-right: 1px solid #ddd;
+  //   // border-bottom: 1px solid #ddd;
+  // }
   ::v-deep .van-tabs__line {
     background: #5babfb;
     width: 15px;
@@ -145,7 +145,7 @@ export default {
     height: 43px;
     background: #fff;
     opacity: .9;
-    border-bottom: 1px solid #ddd;
+    // border-bottom: 1px solid #ddd;
     .van-icon-wap-nav {
       display: flex;
       justify-content: center;

@@ -11,14 +11,19 @@
       @cancel="$router.back()"
     />
   </form>
+  <!-- 联想建议 -->
+  <search-suggest/>
 </div>
 </template>
 
 <script>
+import SearchSuggest from './components/SearchSuggest'
 
 export default {
   name: 'SearchIndex',
-  components: {},
+  components: {
+    SearchSuggest
+  },
   data () {
     return {
       searchText: ''
