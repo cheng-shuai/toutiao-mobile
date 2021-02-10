@@ -5,7 +5,6 @@
     <van-search
       v-model="searchText"
       placeholder="请输入搜索关键词"
-      input-align="center"
       show-action
       @focus="isShowResult = false"
       @search="onSearch"
@@ -15,7 +14,10 @@
   <!-- 搜索结果 -->
   <search-result v-if="isShowResult"/>
   <!-- 联想建议 -->
-  <search-suggest v-else-if="searchText"/>
+  <search-suggest
+    v-else-if="searchText"
+    :search-text="searchText"
+  />
   <!-- 搜索历史 -->
   <seatch-history v-else/>
 </div>
