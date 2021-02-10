@@ -6,6 +6,8 @@
       v-model="searchText"
       placeholder="请输入搜索关键词"
       show-action
+      background="#3296fa"
+      shape="round"
       @focus="isShowResult = false"
       @search="onSearch"
       @cancel="$router.back()"
@@ -17,6 +19,7 @@
   <search-suggest
     v-else-if="searchText"
     :search-text="searchText"
+    @search="onSearch"
   />
   <!-- 搜索历史 -->
   <seatch-history v-else/>
@@ -44,7 +47,8 @@ export default {
   computed: {},
   watch: {},
   methods: {
-    onSearch () {
+    onSearch (serchText) {
+      this.searchText = serchText
       this.isShowResult = true
     }
   },
@@ -53,5 +57,7 @@ export default {
 }
 </script>
 <style lang=less scoped>
-
+.van-search__action {
+  color: #fff;
+}
 </style>
