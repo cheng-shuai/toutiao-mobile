@@ -13,16 +13,20 @@
   </form>
   <!-- 联想建议 -->
   <search-suggest/>
+  <!-- 搜索历史 -->
+  <seatch-history/>
 </div>
 </template>
 
 <script>
 import SearchSuggest from './components/SearchSuggest'
+import SeatchHistory from './components/SeatchHistory.vue'
 
 export default {
   name: 'SearchIndex',
   components: {
-    SearchSuggest
+    SearchSuggest,
+    SeatchHistory
   },
   data () {
     return {
