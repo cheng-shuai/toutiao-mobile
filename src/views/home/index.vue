@@ -8,6 +8,7 @@
         icon="search"
         type="info"
         round
+        to="search"
         class="search-btn"
       >搜索
       </van-button>
