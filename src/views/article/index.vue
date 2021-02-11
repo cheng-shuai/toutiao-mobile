@@ -3,7 +3,7 @@
   <!-- 导航栏 -->
   <van-nav-bar
     class="app-nav-bar"
-    title="登录"
+    title="文章详情"
     left-arrow
     @click-left="$router.back()"
   />
@@ -30,7 +30,11 @@
       class="concern-btn"
     >{{article.is_followed ? '已关注' : '关注'}}</van-button>
   </van-cell>
-  <div class="markdown-body" v-html="article.content">
+  <div
+    class="markdown-body"
+    v-html="article.content"
+    ref="articleRef"
+  >
   </div>
 </div>
 </template>
@@ -38,6 +42,7 @@
 <script>
 import 'github-markdown-css'
 import { getArticleById } from '@/api/article'
+import { ImagePreview } from 'vant'
 
 export default {
   name: 'ArticleIndex',
@@ -59,6 +64,24 @@ export default {
     async loadArticle () {
       const { data } = await getArticleById(this.articleId)
       this.article = data.data
+      this.$nextTick(() => {
+        this.handlePreviewImages()
+      })
+    },
+    handlePreviewImages () {
+      const articleContent = this.$refs.articleRef
+      const imgs = articleContent.querySelectorAll('img')
+      const imgPaths = []
+      imgs.forEach((img, index) => {
+        imgPaths.push(img.src)
+        img.onclick = function () {
+          // 在时间处理函数中调用ImagePreview() 预览
+          ImagePreview({
+            images: imgPaths, // 预览图片路径列表
+            startPosition: index
+          })
+        }
+      })
     }
   },
   created () {
