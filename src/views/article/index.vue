@@ -32,11 +32,39 @@
       @click="onFollow"
     >{{article.is_followed ? '已关注' : '关注'}}</van-button>
   </van-cell>
+  <!-- 文章内容 -->
   <div
     class="markdown-body"
     v-html="article.content"
     ref="articleRef"
   >
+  </div>
+  <!-- 底部区域 -->
+  <div class="article-bottom">
+    <div class="bottom-btn">
+      <van-button
+      type="default"
+      class="comment-btn"
+      round
+      size="small"
+      >写评论</van-button>
+    </div>
+    <div class="bottom-icon">
+      <van-icon
+        name="comment-o"
+        info="21"
+        color="#777"
+      />
+      <van-icon
+        color="#777"
+        name="star-o"
+      />
+      <van-icon
+        color="#777"
+        name="good-job-o"
+      />
+      <van-icon name="share" color="#777"></van-icon>
+    </div>
   </div>
 </div>
 </template>
@@ -132,6 +160,28 @@ export default {
     padding: 13px;
     ul {
       list-style: unset;
+    }
+    margin-bottom: 45px;
+  }
+  .article-bottom {
+    position: fixed;
+    bottom: -3px;
+    right: 0;
+    left: 0;
+    height: 44px;
+    background-color: #fff;
+    border-top: 1px solid #d8d8d8;
+    display: flex;
+    .comment-btn {
+      height: 22px;
+      width: 140px;
+      margin-left: 14px;
+    }
+    .bottom-icon {
+      width: 220px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
     }
   }
 }
