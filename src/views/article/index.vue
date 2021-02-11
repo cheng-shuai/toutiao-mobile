@@ -28,6 +28,8 @@
       :icon="article.is_followed ? '' : 'plus'"
       round size="small"
       class="concern-btn"
+      :loading="isFollowLoding"
+      @click="onFollow"
     >{{article.is_followed ? '已关注' : '关注'}}</van-button>
   </van-cell>
   <div
@@ -43,6 +45,7 @@
 import 'github-markdown-css'
 import { getArticleById } from '@/api/article'
 import { ImagePreview } from 'vant'
+import { followUser, deleteFollow } from '@/api/user'
 
 export default {
   name: 'ArticleIndex',
@@ -55,7 +58,8 @@ export default {
   },
   data () {
     return {
-      article: {}
+      article: {},
+      isFollowLoding: false
     }
   },
   computed: {},
@@ -82,6 +86,19 @@ export default {
           })
         }
       })
+    },
+    async onFollow () {
+      this.isFollowLoding = true
+      if (this.article.is_followed) {
+        // 用户已经关注，则取消关注
+        await deleteFollow(this.article.aut_id)
+      } else {
+        // 用户没有关注，则关注
+        await followUser(this.article.aut_id)
+      }
+      this.article.is_followed = !this.article.is_followed
+      // 关闭loading状态
+      this.isFollowLoding = false
     }
   },
   created () {
