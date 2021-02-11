@@ -8,24 +8,33 @@
     finished-text="没有更多了"
     @load="onLoad"
   >
-    <van-cell
+  <!-- 评论项 -->
+  <comment-item
+    v-for="(comment, index) in list"
+    :key="index"
+    :comment="comment"
+  />
+    <!-- <van-cell
       v-for="(comment, index) in list"
       :key="index"
       :title="comment.content"
-    />
+    /> -->
   </van-list>
 </div>
 </template>
 
 <script>
 import { getComments } from '@/api/comment'
+import CommentItem from './CommentItem.vue'
 
 export default {
   name: '',
-  components: {},
+  components: {
+    CommentItem
+  },
   props: {
     articleId: {
-      type: [String, Object],
+      type: [String, Object, Number],
       required: true
     }
   },
@@ -52,7 +61,6 @@ export default {
       })
       // 把数据放到列表中
       const { results } = data.data
-      console.log(results)
       this.list.push(...results)
       // // 加载状态结束
       this.loading = false
