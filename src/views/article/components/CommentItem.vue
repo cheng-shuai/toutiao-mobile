@@ -20,7 +20,12 @@
     <!-- 右边点赞按钮 -->
     <div class="right-icon" slot="right-icon">
       <div>
-        <van-icon class="icon-font" name="good-job-o" />
+        <van-icon
+          class="icon-font"
+          :color="comment.is_liking ? 'hotpink' : '' "
+          :name="comment.is_liking ? 'good-job' : 'good-job-o' "
+          @click="onLike"
+        />
       <span class="like-count">{{comment.like_count}}</span>
       </div>
     </div>
@@ -29,6 +34,7 @@
 </template>
 
 <script>
+import { likeComment, dislikeComment } from '@/api/comment'
 
 export default {
   name: 'CommentItem',
@@ -44,7 +50,23 @@ export default {
   },
   computed: {},
   watch: {},
-  methods: {},
+  methods: {
+    async onLike () {
+      if (this.comment.is_liking) {
+        // 如果评论是点赞状态，则取消点赞
+        await dislikeComment(this.comment.com_id)
+        // 修改点赞数量
+        this.comment.like_count--
+      } else {
+        // 如果文章是未点赞状态，则点赞
+        await likeComment(this.comment.com_id)
+        // 修改点赞数量
+        this.comment.like_count++
+      }
+      // 更改按钮状态
+      this.comment.is_liking = !this.comment.is_liking
+    }
+  },
   created () {},
   mounted () {}
 }
