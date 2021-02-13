@@ -13,6 +13,7 @@
     v-for="(comment, index) in list"
     :key="index"
     :comment="comment"
+    @reply-click="$emit('reply-click', $event)"
   />
     <!-- <van-cell
       v-for="(comment, index) in list"
@@ -59,7 +60,6 @@ export default {
         offset: this.offset,
         limit: this.limit
       })
-      console.log(data)
       this.$emit('update-total-count', data.data.total_count)
       // 把数据放到列表中
       const { results } = data.data

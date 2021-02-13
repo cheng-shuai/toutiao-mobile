@@ -41,7 +41,11 @@
     >
     </div>
     <!-- 评论列表 -->
-    <comment-list :articleId="articleId" @update-total-count="badge = $event"/>
+    <comment-list
+      :articleId="articleId"
+      @update-total-count="badge = $event"
+      @reply-click="onReplyClick"
+    />
   </div>
   <!-- 底部区域 -->
   <div class="article-bottom">
@@ -83,6 +87,13 @@
       @post-sucess="onPostSucess"
     />
   </van-popup>
+  <!-- 回复弹出层 -->
+  <van-popup
+    v-model="isCommentShow"
+    position="bottom"
+  >
+    <comment-reply/>
+  </van-popup>
 </div>
 </template>
 
@@ -99,12 +110,14 @@ import { ImagePreview } from 'vant'
 import { followUser, deleteFollow } from '@/api/user'
 import CommentList from './components/CommentList.vue'
 import PostComment from './components/PostComment.vue'
+import CommentReply from './components/CommentReply.vue'
 
 export default {
   name: 'ArticleIndex',
   components: {
     CommentList,
-    PostComment
+    PostComment,
+    CommentReply
   },
   props: {
     articleId: {
@@ -117,7 +130,8 @@ export default {
       article: {},
       isFollowLoding: false,
       isPostShow: false,
-      badge: 0
+      badge: 0,
+      isCommentShow: false
     }
   },
   computed: {},
@@ -195,6 +209,9 @@ export default {
     onPostSucess () {
       this.isPostShow = false
       this.badge++
+    },
+    onReplyClick (comment) {
+      this.isCommentShow = true
     }
   },
   created () {

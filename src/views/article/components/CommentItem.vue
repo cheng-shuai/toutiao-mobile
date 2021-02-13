@@ -14,7 +14,12 @@
       <div class="content">{{comment.content}}</div>
       <div class="b-wrap">
         <span class="pubdate">{{comment.pubdate | datetime}}</span>
-        <van-button class="reply-btn" size="mini" round>{{comment.reply_count}}回复</van-button>
+        <van-button
+          class="reply-btn"
+          size="mini"
+          round
+          @click="$emit('reply-click', comment)"
+        >{{comment.reply_count}}回复</van-button>
       </div>
     </div>
     <!-- 右边点赞按钮 -->
