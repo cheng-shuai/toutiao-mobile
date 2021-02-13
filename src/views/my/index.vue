@@ -14,7 +14,7 @@
           <div class="name">{{ currentUser.name }}</div>
         </template>
         <template #right-icon>
-          <van-button class="edit-btn" size="mini" round>编辑资料</van-button>
+          <van-button class="edit-btn" size="mini" round to="/user/profile">编辑资料</van-button>
         </template>
       </van-cell>
       <van-grid :border="false" style="box-sizing: border-box">
