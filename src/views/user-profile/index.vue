@@ -7,7 +7,13 @@
       left-arrow
       @click-left="$router.back()"
   />
-  <input type="file" hidden ref="file"/>
+  <input
+    type="file"
+    hidden
+    ref="file"
+    accept="image/*"
+    @change="onFileChange"
+  />
   <van-cell title="头像" is-link center @click="$refs.file.click()">
     <van-image
       width="36"
@@ -71,6 +77,19 @@
       @input="userProfile.birthday = $event"
     />
   </van-popup>
+  <!-- 修改头像弹出层 -->
+  <van-popup
+    v-model="isUpdatePhotoShow"
+    position="bottom"
+    :style="{ height: '100%' }"
+  >
+    <update-photo
+      v-if="isUpdatePhotoShow"
+      :file="file"
+      @close="isUpdatePhotoShow = false"
+      @update-photo="userProfile.photo = $event"
+    />
+  </van-popup>
 </div>
 </template>
 
@@ -79,13 +98,15 @@ import { getUserProfile } from '@/api/user'
 import UpdateName from './components/UpdateName.vue'
 import UpdateGender from './components/UpdateGender.vue'
 import UpdateBirthday from './components/UpdateBirthday.vue'
+import UpdatePhoto from './components/UpdatePhoto.vue'
 
 export default {
   name: 'UserProfileIndex',
   components: {
     UpdateName,
     UpdateGender,
-    UpdateBirthday
+    UpdateBirthday,
+    UpdatePhoto
   },
   props: {},
   data () {
@@ -93,7 +114,9 @@ export default {
       userProfile: {},
       isEditNameShow: false,
       isUpdateGenderShow: false,
-      isUpdateBirthdayShow: false
+      isUpdateBirthdayShow: false,
+      isUpdatePhotoShow: false,
+      file: null
     }
   },
   computed: {},
@@ -102,6 +125,12 @@ export default {
     async loadUserProfile () {
       const { data } = await getUserProfile()
       this.userProfile = data.data
+    },
+    onFileChange () {
+      const file = this.$refs.file.files[0]
+      this.file = file
+      this.isUpdatePhotoShow = true
+      this.$refs.file.value = ''
     }
   },
   created () {
