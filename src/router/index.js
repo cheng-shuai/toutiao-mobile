@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '@/store'
+import { Dialog } from 'vant'
 
 Vue.use(VueRouter)
 
@@ -55,12 +57,37 @@ const routes = [
   {
     path: '/user/chat',
     name: 'user-chat',
-    component: () => import('@/views/user-chat')
+    component: () => import('@/views/user-chat'),
+    meta: { requiresAuth: true }
   }
 ]
 
 const router = new VueRouter({
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.name === 'login' || !to.meta.requiresAuth) {
+    return next()
+  }
+
+  if (store.state.user) {
+    return next()
+  }
+
+  Dialog.confirm({
+    title: '该功能需要登录，确认登录吗？'
+  }).then(() => {
+    next({
+      name: 'login',
+      query: {
+        redirect: from.fullPath
+      }
+    })
+  }).catch(() => {
+    // on cancel
+    next(false)
+  })
 })
 
 export default router

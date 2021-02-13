@@ -109,8 +109,9 @@ export default {
         this.$store.commit('removeCachePage', 'LayoutIndex')
         // 存储用户token
         this.$store.commit('setUser', res.data.data)
-        // 跳转到我的页面
-        this.$router.back()
+        // 跳转到首页
+        const redirect = this.$route.query.redirect || '/'
+        this.$router.replace(redirect)
       } catch (err) {
         this.$toast.fail('用户名或者密码错误')
       }
