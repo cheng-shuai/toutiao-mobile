@@ -16,22 +16,63 @@
       :src="userProfile.photo"
     />
   </van-cell>
-  <van-cell title="昵称" is-link :value="userProfile.name"></van-cell>
-  <van-cell title="性别" is-link :value="userProfile.gender === 1 ? '女' : '男' "></van-cell>
+  <van-cell
+    title="昵称"
+    is-link
+    :value="userProfile.name"
+    @click="isEditNameShow = true"
+  ></van-cell>
+  <van-cell
+    title="性别"
+    is-link
+    :value="userProfile.gender === 1 ? '女' : '男' "
+    @click="isUpdateGenderShow = true"
+  ></van-cell>
   <van-cell title="生日" is-link :value="userProfile.birthday"></van-cell>
+  <!-- 修改昵称弹出层 -->
+  <van-popup
+    v-model="isEditNameShow"
+    position="bottom"
+    :style="{ height: '100%' }"
+  >
+    <update-name
+      v-if="isEditNameShow"
+      @close="isEditNameShow = false"
+      :username="userProfile.name"
+      @update-name="userProfile.name = $event"
+    />
+  </van-popup>
+  <!-- 修改性别弹出层 -->
+  <van-popup
+    v-model="isUpdateGenderShow"
+    position="bottom"
+  >
+    <update-gender
+      @close="isUpdateGenderShow = false"
+      :gender="userProfile.gender"
+      @update-gender="userProfile.gender = $event"
+    />
+  </van-popup>
 </div>
 </template>
 
 <script>
 import { getUserProfile } from '@/api/user'
+import UpdateName from './components/UpdateName.vue'
+import UpdateGender from './components/UpdateGender.vue'
 
 export default {
   name: 'UserProfileIndex',
-  components: {},
+  components: {
+    UpdateName,
+    UpdateGender
+  },
   props: {},
   data () {
     return {
-      userProfile: {}
+      userProfile: {},
+      isEditNameShow: false,
+      isUpdateGenderShow: false
     }
   },
   computed: {},
@@ -49,5 +90,9 @@ export default {
 }
 </script>
 <style lang=less scoped>
-
+.user-profile-container {
+  .van-popup {
+    background-color: #f5f7f9;
+  }
+}
 </style>
