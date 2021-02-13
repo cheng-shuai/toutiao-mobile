@@ -92,7 +92,10 @@
     v-model="isCommentShow"
     position="bottom"
   >
-    <comment-reply/>
+    <comment-reply
+      @close="isCommentShow = false"
+      :comment="replyComment"
+    />
   </van-popup>
 </div>
 </template>
@@ -131,7 +134,8 @@ export default {
       isFollowLoding: false,
       isPostShow: false,
       badge: 0,
-      isCommentShow: false
+      isCommentShow: false,
+      replyComment: {}
     }
   },
   computed: {},
@@ -211,6 +215,7 @@ export default {
       this.badge++
     },
     onReplyClick (comment) {
+      this.replyComment = comment
       this.isCommentShow = true
     }
   },
