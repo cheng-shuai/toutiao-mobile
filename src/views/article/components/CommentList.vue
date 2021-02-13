@@ -34,9 +34,13 @@ export default {
     CommentItem
   },
   props: {
-    articleId: {
+    source: {
       type: [String, Object, Number],
       required: true
+    },
+    type: {
+      type: String,
+      default: 'a'
     }
   },
   data () {
@@ -55,8 +59,8 @@ export default {
       // 异步更新数据
       // setTimeout 仅做示例，真实场景中一般为 ajax 请求
       const { data } = await getComments({
-        type: 'a',
-        source: this.articleId,
+        type: this.type,
+        source: this.source.toString(),
         offset: this.offset,
         limit: this.limit
       })

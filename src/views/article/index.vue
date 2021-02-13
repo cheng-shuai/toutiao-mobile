@@ -42,7 +42,7 @@
     </div>
     <!-- 评论列表 -->
     <comment-list
-      :articleId="articleId"
+      :source="articleId"
       @update-total-count="badge = $event"
       @reply-click="onReplyClick"
     />
@@ -93,6 +93,7 @@
     position="bottom"
   >
     <comment-reply
+      v-if="isCommentShow"
       @close="isCommentShow = false"
       :comment="replyComment"
     />

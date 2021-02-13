@@ -9,16 +9,20 @@
     />
   </van-nav-bar>
   <comment-item :comment="comment" />
+  <!-- 全部评论 -->
+  <comment-list :source="comment.com_id" type="c"/>
 </div>
 </template>
 
 <script>
 import CommentItem from './CommentItem'
+import CommentList from './CommentList.vue'
 
 export default {
   name: '',
   components: {
-    CommentItem
+    CommentItem,
+    CommentList
   },
   props: {
     comment: {
