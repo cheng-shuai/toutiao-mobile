@@ -7,7 +7,8 @@
       left-arrow
       @click-left="$router.back()"
   />
-  <van-cell title="头像" is-link center>
+  <input type="file" hidden ref="file"/>
+  <van-cell title="头像" is-link center @click="$refs.file.click()">
     <van-image
       width="36"
       height="36"
@@ -64,6 +65,7 @@
     position="bottom"
   >
     <update-birthday
+      v-if="isUpdateBirthdayShow"
       v-model="userProfile.birthday"
       @close="isUpdateBirthdayShow = false"
       @input="userProfile.birthday = $event"
