@@ -28,7 +28,12 @@
     :value="userProfile.gender === 1 ? '女' : '男' "
     @click="isUpdateGenderShow = true"
   ></van-cell>
-  <van-cell title="生日" is-link :value="userProfile.birthday"></van-cell>
+  <van-cell
+    title="生日"
+    is-link
+    :value="userProfile.birthday"
+    @click="isUpdateBirthdayShow = true"
+  ></van-cell>
   <!-- 修改昵称弹出层 -->
   <van-popup
     v-model="isEditNameShow"
@@ -53,6 +58,17 @@
       @update-gender="userProfile.gender = $event"
     />
   </van-popup>
+  <!-- 修改生日弹出层 -->
+  <van-popup
+    v-model="isUpdateBirthdayShow"
+    position="bottom"
+  >
+    <update-birthday
+      v-model="userProfile.birthday"
+      @close="isUpdateBirthdayShow = false"
+      @input="userProfile.birthday = $event"
+    />
+  </van-popup>
 </div>
 </template>
 
@@ -60,19 +76,22 @@
 import { getUserProfile } from '@/api/user'
 import UpdateName from './components/UpdateName.vue'
 import UpdateGender from './components/UpdateGender.vue'
+import UpdateBirthday from './components/UpdateBirthday.vue'
 
 export default {
   name: 'UserProfileIndex',
   components: {
     UpdateName,
-    UpdateGender
+    UpdateGender,
+    UpdateBirthday
   },
   props: {},
   data () {
     return {
       userProfile: {},
       isEditNameShow: false,
-      isUpdateGenderShow: false
+      isUpdateGenderShow: false,
+      isUpdateBirthdayShow: false
     }
   },
   computed: {},
