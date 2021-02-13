@@ -56,7 +56,7 @@
     </van-grid>
     <div class="operate">
       <van-cell title="消息通知" is-link to="/" class="schoolmate"/>
-      <van-cell title="小智同学" is-link to="/" class="schoolmate"/>
+      <van-cell title="小智同学" is-link to="/user/chat" class="schoolmate"/>
     </div>
     <van-button
       @click="onLogout"
