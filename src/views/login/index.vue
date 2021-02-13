@@ -105,6 +105,8 @@ export default {
       try {
         const res = await login(this.user)
         this.$toast.success('登录成功')
+        // 清楚 layout 的缓存，让他重新渲染
+        this.$store.commit('removeCachePage', 'LayoutIndex')
         // 存储用户token
         this.$store.commit('setUser', res.data.data)
         // 跳转到我的页面
