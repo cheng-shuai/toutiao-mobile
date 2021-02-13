@@ -8,7 +8,7 @@ import JSONbig from 'json-bigint'
 
 const request = axios.create({
   baseURL: 'http://api-toutiao-web.itheima.net',
-  // baseURL: 'http://ttapi.research.itcast.cn/'
+  // baseURL: 'http://ttapi.research.itcast.cn/',
   transformResponse: [function (data) {
     // Do whatever you want to transform the data
     // console.log(data)

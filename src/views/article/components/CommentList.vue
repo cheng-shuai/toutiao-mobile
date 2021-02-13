@@ -59,6 +59,8 @@ export default {
         offset: this.offset,
         limit: this.limit
       })
+      console.log(data)
+      this.$emit('update-total-count', data.data.total_count)
       // 把数据放到列表中
       const { results } = data.data
       this.list.push(...results)

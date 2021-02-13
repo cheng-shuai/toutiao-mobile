@@ -36,3 +36,14 @@ export const dislikeComment = commentId => {
     url: `/app/v1_0/comment/likings/${commentId}`
   })
 }
+
+/**
+ * 添加评论或评论回复
+ */
+export const addComment = data => {
+  return request({
+    method: 'POST',
+    url: '/app/v1_0/comments',
+    data
+  })
+}

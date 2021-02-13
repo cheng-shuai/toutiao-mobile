@@ -41,7 +41,7 @@
     >
     </div>
     <!-- 评论列表 -->
-    <comment-list :articleId="articleId"/>
+    <comment-list :articleId="articleId" @update-total-count="badge = $event"/>
   </div>
   <!-- 底部区域 -->
   <div class="article-bottom">
@@ -51,12 +51,13 @@
       class="comment-btn"
       round
       size="small"
+      @click="isPostShow = true"
       >写评论</van-button>
     </div>
     <div class="bottom-icon">
       <van-icon
         name="comment-o"
-        badge="21"
+        :badge="badge"
         color="#777"
       />
       <van-icon
@@ -72,6 +73,16 @@
       <van-icon name="share" color="#777"></van-icon>
     </div>
   </div>
+  <!-- 评论弹出层 -->
+  <van-popup
+    v-model="isPostShow"
+    position="bottom"
+  >
+    <post-comment
+      :target="articleId"
+      @post-sucess="onPostSucess"
+    />
+  </van-popup>
 </div>
 </template>
 
@@ -87,11 +98,13 @@ import {
 import { ImagePreview } from 'vant'
 import { followUser, deleteFollow } from '@/api/user'
 import CommentList from './components/CommentList.vue'
+import PostComment from './components/PostComment.vue'
 
 export default {
   name: 'ArticleIndex',
   components: {
-    CommentList
+    CommentList,
+    PostComment
   },
   props: {
     articleId: {
@@ -102,7 +115,9 @@ export default {
   data () {
     return {
       article: {},
-      isFollowLoding: false
+      isFollowLoding: false,
+      isPostShow: false,
+      badge: 0
     }
   },
   computed: {},
@@ -176,6 +191,10 @@ export default {
         this.$toast.success('点赞成功')
         this.article.attitude = 1
       }
+    },
+    onPostSucess () {
+      this.isPostShow = false
+      this.badge++
     }
   },
   created () {
